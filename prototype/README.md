@@ -67,3 +67,17 @@ Existing `pricing_lab.py` remains unchanged for regression compatibility and rep
 - **Non-forecast envelope:** all scenarios must be explicitly selected and audited by a human. Passing an envelope does not establish a probability-of-success claim.
 
 Run `cd prototype && python -m unittest discover -s tests -v`. No production deployment, real fund, real returns or payment integration is authorized.
+
+## v0.5 — Single-Unknown Course Inequality Calculator (research)
+
+The confirmed product decision is `TEC-DEC-012` in `docs/DECISIONS.md`. The experimental `single_unknown_solver.py` introduces `SingleUnknownCase`, `Constraint`, and `solve_grid`.
+
+For **each course version**, provide the selected unknown name (e.g. `P` for tuition or `N` for learners), fixed values for all other symbols, one or more inequalities (`>=`, `<=`, `==`), and an explicit finite `lower/upper/step` search grid. Optionally supply independently justified `reasonable_lower/reasonable_upper` bounds. The solver:
+- rejects unknown symbols, multiple unresolved unknowns, floats, unsafe expression syntax, excessive grid sizes and invalid input;
+- searches every grid point, including non-monotonic feasible regions, without assuming a single root;
+- distinguishes mathematical constraint failures, undefined sample points, and values outside **caller-supplied** reasonable bounds;
+- returns mathematically feasible sampled values and values within declared bounds separately.
+
+**Critical:** an unbounded-by-evidence reasonable range is NOT empirical approval. Results are **sampled values only**, not exact continuous solutions, global optima, market realism, verified financial solvency, or approved prices. Expression inputs use strictly limited decimal arithmetic with operators `+`, `-`, `*`, `/`; no functions, arbitrary code, exponents, external data, stochastic inference, or business-rule modifications. A mathematical inequality like `N*P*(G-q)>=C` is illustrative only. A real course case must additionally connect to verified temporal cash flow, restricted liquidity, legal payment obligations, and validated data provenance.
+
+The example parameters inside unit tests are fabricated *test fixtures*, not approved assumptions. Every revision of course inputs must be a separately versioned scenario and require a human decision before any commercial use.
