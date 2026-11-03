@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ماشین‌حساب ساده تکنیک — پرداخت به شرکت‌ها</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f7fb;color:#172640;font:15px/1.8 Tahoma,Arial,sans-serif}.wrap{max-width:760px;margin:auto;padding:25px 15px 50px}.top{display:flex;gap:14px;align-items:center;margin-bottom:18px}.logo{height:54px;width:54px;border-radius:15px;background:#f3c524;display:grid;place-items:center;font-size:26px;font-weight:900;color:#172640}h1{font-size:24px;margin:0}p{margin:4px 0 12px;color:#526079}.panel{background:#fff;border:1px solid #e1e6f0;border-radius:17px;padding:23px;margin:15px 0;box-shadow:0 5px 20px #1726400a}h2{font-size:18px;margin:0 0 15px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:10px}.field label{font-size:13px;font-weight:bold;display:block;margin-bottom:5px}input,select{width:100%;padding:13px;background:#fff;border:1px solid #cbd4e1;border-radius:11px;color:#182741;font:16px Tahoma,Arial,sans-serif}input:focus,select:focus{outline:2px solid #f3c524}input:disabled{background:#f5f7fb;color:#8a93a1}.help{font-size:12px;color:#69758b;margin-top:5px}button{cursor:pointer;width:100%;border:0;background:#f3c524;color:#172640;padding:16px;font:700 16px Tahoma;border-radius:12px;margin:10px 0}.result{background:#f6f9ff;border:1px solid #d9e3f5;border-radius:14px;padding:16px;margin-top:14px}.result strong{font-size:23px;color:#102a4c}.result.bad{border-color:#e8abb0;background:#fff4f4}.result.good{border-color:#8ed3b2;background:#f0fff8}.pill{display:inline-block;background:#eef2fa;color:#405270;border-radius:100px;padding:1px 12px;font-size:12px;margin-bottom:7px}.notice{font-size:13px;color:#6e5d2a;background:#fff8df;padding:13px;border-radius:11px;margin:16px 0}.note{color:#68758b;font-size:12px}details{background:#fff;border:1px solid #e0e7f0;border-radius:13px;padding:14px;margin-top:13px}summary{cursor:pointer;font-weight:bold}#result{display:none}.sub{font-size:13px;color:#526079}.right{margin-top:9px}.company{margin-top:22px;border-top:1px solid #dce2ef;padding-top:20px}.company .notice{margin-bottom:0}#breakdown p{margin:7px 0}#hostmonthsbox[hidden]{display:none}.mono{font-variant-numeric:tabular-nums}@media(max-width:560px){.grid{grid-template-columns:1fr}h1{font-size:20px}.panel{padding:18px}}
+</style></head><body><main class="wrap"><header class="top"><div class="logo">T</div><div><h1>ماشین‌حساب تکنیک</h1><p>چند عدد وارد کن، یک مجهول پیدا کن.</p></div></header>
+<div class="notice">نسخه ساده آزمایشی است. اعداد اولیه فقط مثال‌اند و این نتیجه به معنی قیمت مناسب بازار یا تضمین سود صندوق نیست.</div>
+<section class="panel"><h2>۱. چه عددی را پیدا کنیم؟</h2><div class="field"><label for="unknown">مجهول</label><select id="unknown"><option value="price">شهریه هر نفر</option><option value="people">حداقل تعداد کارجو</option><option value="cost">بیشترین هزینه مجاز هر نفر</option></select></div>
+<h2>۲. اطلاعات این دوره</h2><div class="grid">
+<div class="field" data-key="people"><label for="people">تعداد کارجو (نفر)</label><input id="people" type="number" min="1" step="1" value="100"></div>
+<div class="field" data-key="price"><label for="price">شهریه هر نفر (تومان)</label><input id="price" type="number" min="0" step="any" value="30000000"></div>
+<div class="field" data-key="cost"><label for="cost">هزینه آموزش و پشتیبانی هر نفر (تومان)</label><input id="cost" type="number" min="0" step="any" value="6000000"><div class="help">بدون هزینه شرکت کارآموزپذیر؛ آن را پایین‌تر جدا وارد کن.</div></div>
+<div class="field"><label for="fixed">هزینه ثابت دوره (تومان)</label><input id="fixed" type="number" min="0" step="any" value="100000000"></div>
+<div class="field"><label for="months">مدت سرمایه‌گذاری (ماه)</label><input id="months" type="number" min="0" step="any" value="18"></div>
+<div class="field"><label for="rate">بازده مؤثر سالانه فرضی (٪)</label><input id="rate" type="number" min="-100" step="any" value="30"></div>
+<div class="field"><label for="pass">درصد موفقیت نهایی (٪)</label><input id="pass" type="number" min="0" max="100" step="any" value="80"></div>
+<div class="field"><label for="profit">سود هدف کل دوره (تومان)</label><input id="profit" type="number" min="0" step="any" value="200000000"></div>
+</div>
+<div class="company"><h2>۳. پرداخت به شرکت‌ها</h2><p class="sub">فقط مبلغ‌ها را وارد کن؛ پرداخت کارآموزی از مشوق استخدام جداست.</p>
+<div class="grid">
+<div class="field"><label for="apprentice">چند درصد کارجویان وارد کارآموزی می‌شوند؟</label><input id="apprentice" type="number" min="0" max="100" step="any" value="90"></div>
+<div class="field"><label for="hostpay">پرداخت به شرکت بابت هر کارآموز (تومان)</label><input id="hostpay" type="number" min="0" step="any" value="2000000"></div>
+<div class="field"><label for="hostbasis">روش پرداخت کارآموزی</label><select id="hostbasis"><option value="total">یک مبلغ برای کل کارآموزی</option><option value="monthly">مبلغ ماهانه برای هر کارآموز</option></select></div>
+<div class="field" id="hostmonthsbox" hidden><label for="hostmonths">تعداد ماه‌های کارآموزی</label><input id="hostmonths" type="number" min="0" step="any" value="3"></div>
+<div class="field"><label for="hiring">چند درصد افراد موفق استخدام می‌شوند؟</label><input id="hiring" type="number" min="0" max="100" step="any" value="70"><div class="help">بقیه افراد موفق در مسیر کار مستقل قرار می‌گیرند.</div></div>
+</div>
+<div class="notice">سرمایه اشتغال هر فرد موفق برابر شهریه همان دوره است؛ در مسیر استخدام به شرکت پرداخت می‌شود و در مسیر مستقل به خود فرد. این سرمایه فقط <b>یک‌بار</b> در هزینه‌ها لحاظ می‌شود.</div></div>
+<button id="calc">محاسبه کن</button><div id="result" role="status" aria-live="polite"></div><div id="breakdown" class="result" role="status" aria-live="polite"></div>
+<details><summary>این محاسبه چطور کار می‌کند؟</summary><p>در این مدل ساده شهریه را با بازده فرضی رشد می‌دهد، هزینه آموزش و پشتیبانی و پرداخت به شرکت کارآموزپذیر را جدا محاسبه می‌کند و سرمایه هر فرد موفق را دقیقاً یک بار لحاظ می‌کند؛ چه به شرکت استخدام‌کننده برسد چه به خود فرد.</p><p class="note">این مدل هنوز پرداخت‌های میان‌دوره‌ای، تفاوت نقدینگی با ارزش دارایی، قوانین صندوق، مالیات و ریسک واقعی را محاسبه نمی‌کند. برای تصمیم مالی واقعی کافی نیست.</p></details></section>
+<p class="note">فایل روی خود کامپیوتر اجرا می‌شود و اطلاعات واردشده را به هیچ سروری نمی‌فرستد.</p></main>
+<script>
+(function(){'use strict';
+const $=id=>document.getElementById(id),fmt=n=>Math.round(n).toLocaleString('fa-IR');
+function renderUnknown(){const selected=$('unknown').value;for(const id of ['people','price','cost']){const el=$(id);el.disabled=id===selected;const container=document.querySelector('[data-key="'+id+'"]');container.style.opacity=id===selected?'0.5':'1';}document.getElementById('result').style.display='none';document.getElementById('breakdown').style.display='none';}
+function hostFactor(v){return v.hostbasis==='monthly'?v.hostmonths:1;}
+function compute(v,u){
+ const G=Math.pow(1+v.rate/100,v.months/12),q=v.pass/100,margin=G-q;
+ if(!Number.isFinite(G)||!Number.isFinite(margin))throw Error('محاسبه با این اعداد ممکن نیست.');
+ const base=v.fixed+v.profit;
+ // Apprenticeship-host fees and theoretical/support costs are separate.
+ const hostPerEntrant=(v.apprentice/100)*v.hostpay*hostFactor(v);
+ const costPerEntrant=v.cost+hostPerEntrant;
+ let answer,p,n;
+ if(u==='price'){
+  if(margin<=0)throw Error('با این فرض‌ها، افزایش شهریه کسری را برطرف نمی‌کند.');
+  answer=(v.people*costPerEntrant+base)/(v.people*margin);
+  p=Math.max(0,Math.ceil(answer-1e-8));n=v.people;
+ }else if(u==='people'){
+  const gain=v.price*margin-costPerEntrant;
+  if(gain<=0){if(base===0)throw Error('حداقل تعداد یکتایی ندارد؛ فرض‌های دوره را بازبینی کن.');throw Error('هزینه هر کارجو بیشتر از منابع قابل تخصیص است؛ افزایش تعداد مسئله را حل نمی‌کند.');}
+  answer=Math.max(1,Math.ceil((base/gain)-1e-10));n=answer;p=v.price;
+ }else{
+  answer=v.price*margin-base/v.people-hostPerEntrant;
+  if(answer<0)throw Error('حتی با هزینه صفر آموزش و پشتیبانی نیز این هدف مالی تأمین نمی‌شود.');
+  p=v.price;n=v.people;
+ }
+ if(!Number.isFinite(answer)||!Number.isFinite(p)||!Number.isFinite(n))throw Error('پاسخ عددی معتبر نیست.');
+ const success=n*q, totalCapital=success*p;
+ return {answer,unit:u==='people'?'نفر':'تومان',prefix:u==='price'?'حداقل شهریه محاسباتی هر نفر':u==='people'?'حداقل تعداد کارجوی موردنیاز':'بیشترین هزینه آموزش و پشتیبانی هر نفر',
+  explain:'جواب مدل ساده است؛ هنوز تأیید اقتصادی یا تضمین صندوق نیست.',
+  details:{hostTotal:n*hostPerEntrant,hostPerEntrant,totalCapital,
+   hiringCapital:totalCapital*v.hiring/100,independentCapital:totalCapital*(100-v.hiring)/100,
+   apprentices:n*v.apprentice/100,success,percentHiring:v.hiring}};
+}
+function run(){const u=$('unknown').value,v={};
+ for(const id of ['people','price','cost','fixed','months','rate','pass','profit','apprentice','hostpay','hostmonths','hiring']){
+  if(id===u)continue;
+  const el=$(id);if(el.value.trim()==='')return showError('همه کادرهای لازم را پر کن.');
+  v[id]=Number(el.value);if(!Number.isFinite(v[id]))return showError('ورودی عددی نامعتبر است.');
+ }
+ v.hostbasis=$('hostbasis').value;
+ for(const [key,value] of Object.entries(v)){if(typeof value!=='number')continue;
+  if(key==='rate'){if(value < -100)return showError('بازده کمتر از منفی ۱۰۰ درصد معتبر نیست.');}
+  else if(value < 0)return showError('اعداد منفی برای این ورودی‌ها مجاز نیست.');
+ }
+ if(u!=='people'&&(!Number.isInteger(v.people)||v.people<1))return showError('تعداد کارجو باید یک عدد صحیح مثبت باشد.');
+ if(v.pass>100||v.apprentice>100||v.hiring>100)return showError('درصدها باید بین صفر و صد باشند.');
+ if(v.pass>v.apprentice)return showError('درصد موفقیت نهایی نمی‌تواند از درصد ورود به کارآموزی بیشتر باشد.');
+ if(v.months>240)return showError('مدت سرمایه‌گذاری را بازبینی کن.');
+ if(v.hostbasis==='monthly'&&v.hostmonths>v.months)return showError('مدت کارآموزی از مدت کل دوره بیشتر شده است.');
+ try{
+  const r=compute(v,u);if(!Number.isFinite(r.answer)||r.answer>1e16)throw Error('پاسخ عددی معتبر نیست.');
+  const shown=u==='people'?fmt(r.answer):fmt(Math.max(0,Math.ceil(r.answer-1e-8)));
+  const out=$('result');out.className='result good';out.replaceChildren();
+  const badge=document.createElement('div');badge.className='pill';badge.textContent='جواب ریاضی مدل ساده';
+  const heading=document.createElement('div');heading.textContent=r.prefix;
+  const value=document.createElement('strong');value.textContent=shown+' '+r.unit;
+  const exp=document.createElement('div');exp.className='sub right';exp.textContent=r.explain;
+  out.append(badge,heading,value,exp);out.style.display='block';
+  const d=r.details;const breakdown=$('breakdown');breakdown.className='result';breakdown.replaceChildren();
+  const title=document.createElement('b');title.textContent='جزئیات پرداخت به شرکت‌ها و افراد موفق';breakdown.append(title);
+  const rows=[['تعداد مورد انتظار کارآموزان',fmt(d.apprentices)+' نفر'],
+    ['کل پرداخت به شرکت‌های کارآموزپذیر',fmt(d.hostTotal)+' تومان'],
+    ['کل سرمایه افراد موفق',fmt(d.totalCapital)+' تومان'],
+    ['از آن: مشوق استخدام پرداختی به شرکت‌ها',fmt(d.hiringCapital)+' تومان'],
+    ['از آن: سرمایه پرداختی به خوداشتغال‌ها',fmt(d.independentCapital)+' تومان']];
+  for(const [label,value] of rows){const row=document.createElement('p');row.className='sub';row.textContent=label+': '+value;breakdown.append(row);}
+  const msg=document.createElement('p');msg.className='note';msg.textContent='دو مبلغ آخر، جمعاً همان سرمایه کل‌اند و دوباره به هزینه‌ها اضافه نشده‌اند. تعداد افراد حاصل برآورد درصدی است، نه شمار قطعی.';breakdown.append(msg);breakdown.style.display='block';
+ }catch(e){showError(e.message);}
+}
+function showError(msg){const out=$('result');out.className='result bad';out.replaceChildren();const title=document.createElement('strong');title.textContent='نیاز به اصلاح ورودی‌ها';const p=document.createElement('p');p.textContent=msg;out.append(title,p);out.style.display='block';$('breakdown').style.display='none';}
+$('unknown').addEventListener('change',renderUnknown);$('hostbasis').addEventListener('change',()=>{$('hostmonthsbox').hidden=$('hostbasis').value!=='monthly';$('result').style.display='none';$('breakdown').style.display='none';});$('calc').addEventListener('click',run);renderUnknown();
+window.technicSimpleForTests={compute};
+})();
+</script></body></html>
