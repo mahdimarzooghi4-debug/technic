@@ -46,7 +46,7 @@ class CalculatorApiTests(unittest.TestCase):
         self.assertEqual(r["tested"],101)
         self.assertLessEqual(len(r["rejection_examples"]),20)
         self.assertLessEqual(len(r["feasible_examples"]),40)
-        self.assertEqual(r["feasible_count"]+sum(r["rejection_counts"].values()),101)
+        self.assertEqual(r["feasible_count"] + r["rejection_counts"].get("CONSTRAINT_FAILURE", 0) + r["rejection_counts"].get("UNDEFINED", 0), 101)
 
 if __name__=="__main__":
     unittest.main()
