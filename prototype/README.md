@@ -34,3 +34,14 @@ Input monetary values and rates should be decimal strings in one explicitly chos
 6. No AI-selected variables, automated employment, guaranteed investment returns, or production deployment.
 
 The source of confirmed decisions remains `docs/DECISIONS.md`. Numerical assumptions and example amounts are not decisions.
+
+## Scenario analysis v0.2 (research)
+
+`scenario_analysis.py` adds deterministic comparisons **without inventing probabilities**:
+
+- `scenario_envelope((NamedScenario(label, scenario), ...))` scans an identical explicit tuition grid and returns the first price meeting all supplied scenarios, or `NO_COMMON_GRID_PRICE`. Neither status certifies continuous/global optimality or covers omitted real-world risks.
+- `sensitivity_at_price(baseline, price, alternatives)` compares final residual cash, minimum modeled liquidity and total capital paid at the **same** tuition.
+- `shock_return(scenario, period_index, new_rate)` replaces an explicit period return for a what-if test; it does not forecast returns.
+- `delay_capital(scenario, from_period, to_period, recipients)` moves an already-scheduled recipient count to a later period without changing the total count or eligibility.
+
+All prices, costs, return shocks, dates and period sizes must be supplied by a human/research scenario. The **same-period return-before-withdrawals convention** and assumption that returns are liquid remain research-only limitations. In a real fund, investment balances, spendable liquidity and legal obligations must be modeled separately, with finer timing when needed.
