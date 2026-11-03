@@ -40,6 +40,9 @@ The central differentiating technical challenge is a mathematically specified, t
 ### TEC-DEC-011 — Distinct payments and obligations
 Payments to an apprenticeship-host company for practical training and payments to a hiring company as an employment incentive are **different financial events with different purposes**, even if the same company performs both roles. Account for them independently; do not double count fund principal, returns, costs or capital obligations.
 
+### TEC-DEC-012 — Per-course single-unknown inequality calculator (CONFIRMED, 2026-11-03)
+Each course has its own versioned economic variables, cost structure, constraints, and assumptions. A user supplies values for **all variables except exactly one chosen unknown**. A mathematical solver returns the admissible value or range(s) of that unknown under the supplied inequalities and constraints. The result is then checked for reasonableness against explicit, evidence-backed bounds and operational/financial feasibility. If unacceptable, the user revises **documented, legitimately changeable** scenario inputs and solves again; the system must preserve prior scenario versions and explain why an answer was rejected. It must not fabricate return rates, alter actual examination outcomes, automatically approve prices, or silently change confirmed business policies. Mathematical feasibility and empirical reasonableness are separate assessments. A valid answer may be a point, interval(s), or no feasible solution; insufficient input must be distinguished from infeasibility. The final formula/solver algorithms and reasonableness bounds remain subject to technical validation and explicit decisions.
+
 ## Open decisions — do not guess
 
 1. Course-specific theoretical/practical duration, assessment thresholds, retakes, failure and refund treatment.
