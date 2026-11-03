@@ -81,3 +81,20 @@ For **each course version**, provide the selected unknown name (e.g. `P` for tui
 **Critical:** an unbounded-by-evidence reasonable range is NOT empirical approval. Results are **sampled values only**, not exact continuous solutions, global optima, market realism, verified financial solvency, or approved prices. Expression inputs use strictly limited decimal arithmetic with operators `+`, `-`, `*`, `/`; no functions, arbitrary code, exponents, external data, stochastic inference, or business-rule modifications. A mathematical inequality like `N*P*(G-q)>=C` is illustrative only. A real course case must additionally connect to verified temporal cash flow, restricted liquidity, legal payment obligations, and validated data provenance.
 
 The example parameters inside unit tests are fabricated *test fixtures*, not approved assumptions. Every revision of course inputs must be a separately versioned scenario and require a human decision before any commercial use.
+
+## v0.6 — Local Persian management calculator (research)
+
+A **local-only** Persian RTL browser interface is supplied by `admin_calculator.py` and `admin_calculator.html`. From the repo root:
+
+```sh
+cd prototype
+python admin_calculator.py
+```
+
+Open **http://127.0.0.1:8765** locally. This is a Python standard-library development server bound to loopback, **not** a deployable production web service. It has no authentication, deployment hardening, server-side persistence, or external integrations; never expose it publicly or use it with real financial/identifying data.
+
+The page lets a researcher enter a course/version, select exactly one unknown, declare the other variables, provide one or more supported inequalities, define a finite search grid, and optionally enter manually chosen reasonableness bounds. It reports the lowest feasible **sampled** point, the lowest sampled point inside the **user's declared** bounds, counts, and representative rejection reasons. Scenario comparisons can be collected and exported as JSON while the page remains open; they are **not persisted** after closing the page. Inputs are not automatically calibrated against financial or market evidence.
+
+The supplied DEMO values are **fabricated unit-test examples**, in arbitrary consistent units; they are not approved tuition, yield, pass rates or a pricing recommendation. This interface does not yet connect arbitrary inequalities to the independent cash/investment-liquidity model; liquidity verification remains a separate experimental module. Further development requires independently justified variable bounds, timed cash-flow and obligation linkage, financial/legal review, and explicit human price approval.
+
+Use `python -m unittest discover -s tests -v` to run all checks. PR #3 remains Draft/Open.
