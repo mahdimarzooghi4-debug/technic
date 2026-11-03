@@ -19,7 +19,7 @@ class LiquidityOptimizerTests(unittest.TestCase):
         r = evaluate_prices(PriceRange("0", "30", "5"), (LiquidityCase("base", base), LiquidityCase("stress", stress)))
         self.assertEqual(r["first_feasible"], Decimal("20"))
         bad = next(x for x in r["rejected"] if x["price"] == Decimal("15"))
-        self.assertEqual(bad["cases"][1]["violations"], ("INTERIM_CASH_DEFICIT", "FINAL_CASH_TARGET"))
+        self.assertEqual(bad["cases"][1]["violations"], ("INTERIM_CASH_DEFICIT", "FINAL_CASH_TARGET", "FINAL_VALUE_TARGET"))
 
     def test_illiquid_asset_does_not_fund_payments(self):
         s = Scenario(1, (Period(invest_cash="100"), Period(asset_return="1", host_paid="10")))
