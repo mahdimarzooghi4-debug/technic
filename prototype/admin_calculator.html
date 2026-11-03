@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ماشین‌حساب پژوهشی تکنیک</title>
+<style>
+:root{font-family:Tahoma,Arial,sans-serif;color:#e8ecf4;background:#101828}*{box-sizing:border-box}
+body{margin:0}.shell{max-width:1150px;margin:auto;padding:28px 16px 60px}h1{font-size:27px;margin:0}h2{font-size:18px}
+p{line-height:1.8;color:#aebace}small{color:#b6c4d7}header{display:flex;gap:18px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.mark{font-size:28px;background:#facc15;color:#101828;border-radius:14px;padding:12px;font-weight:900}
+.banner{background:#342a14;border:1px solid #a87b25;color:#f8e7bb;padding:12px;border-radius:12px;margin:14px 0}
+.layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(290px,1fr);gap:17px}
+.panel{background:#19253a;border:1px solid #36445c;border-radius:16px;padding:20px;margin-bottom:16px}
+label{display:block;font-size:13px;margin-bottom:7px;color:#e2e8f0;font-weight:bold}
+input,textarea,select{width:100%;padding:11px;border-radius:9px;border:1px solid #51627c;background:#111b2d;color:#fff;font:14px monospace;direction:ltr;text-align:left}
+textarea{min-height:100px;resize:vertical}input:focus,textarea:focus{outline:2px solid #e9bb2e}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{margin-bottom:12px}
+button{cursor:pointer;background:#facc15;color:#111827;font-weight:bold;border:0;border-radius:10px;padding:12px 16px}
+button.secondary{background:#2a3a54;color:#e2e8f0;border:1px solid #64748b}button:disabled{opacity:.5}
+.buttons{display:flex;gap:8px;flex-wrap:wrap}.ok{color:#7ee6af}.bad{color:#ff9c9c}
+.metric{border:1px solid #46536c;border-radius:10px;padding:12px;margin:9px 0;overflow-wrap:anywhere}
+.metric strong{font:20px monospace;direction:ltr;display:inline-block;color:#facc15}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px monospace;line-height:1.8}
+#history{padding-right:16px}#history li{margin-bottom:10px}code{direction:ltr;display:inline-block}
+footer{margin-top:20px;font-size:12px;color:#aebace}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}@media(max-width:460px){.cols{grid-template-columns:1fr}}
+</style></head>
+<body><main class="shell">
+<header><div class="mark">T</div><div><h1>ماشین‌حساب اقتصادی تکنیک</h1><small>نسخه آزمایشگاهی — یک مجهول، چند نامعادله، ارزیابی سناریو</small></div></header>
+<div class="banner">این ابزار فقط مدل ریاضی را در یک شبکه محدود محاسبه می‌کند. «معقول» یعنی در محدوده‌ای که شما وارد کرده‌اید؛ نه تأیید بازار، سود صندوق یا قیمت تجاری.</div>
+<div class="layout"><section>
+<div class="panel"><h2>۱. تعریف دوره و مجهول</h2>
+<div class="cols"><div class="field"><label for="course">شناسه و نسخه دوره</label><input id="course" value="DEMO-COURSE-v1"></div>
+<div class="field"><label for="unknown">نام مجهول</label><input id="unknown" value="P"></div></div>
+<div class="cols"><div class="field"><label for="lo">حد پایین جست‌وجو</label><input id="lo" value="0"></div>
+<div class="field"><label for="hi">حد بالای جست‌وجو</label><input id="hi" value="100"></div>
+<div class="field"><label for="step">گام جست‌وجو</label><input id="step" value="5"></div></div></div>
+<div class="panel"><h2>۲. متغیرهای معلوم</h2><p>هر سطر به‌شکل <code>N=2</code>؛ مقدارها را با اعداد ده‌دهی و نقطه اعشار وارد کنید.</p>
+<label for="known">مقادیر معلوم</label><textarea id="known" spellcheck="false">N=2
+G=1.2
+q=0.8
+C=20</textarea>
+<small>مجهول انتخاب‌شده نباید در این فهرست مقدار داشته باشد.</small></div>
+<div class="panel"><h2>۳. نامعادلات اقتصادی</h2><p>هر سطر: <code>نام | سمت چپ | عملگر | سمت راست</code></p>
+<label for="constraints">نامعادلات (>= و <= و ==)</label>
+<textarea id="constraints" spellcheck="false">economics | N * P * (G - q) | >= | C</textarea>
+<small>عملگرهای مجاز: + - * / و پرانتز. توان، تابع و کد اجرایی مجاز نیست.</small></div>
+<div class="panel"><h2>۴. حدود معقول‌بودن، طبق شواهد خودتان</h2>
+<div class="cols"><div class="field"><label for="reasonableLo">حداقل معقول (اختیاری)</label><input id="reasonableLo" value="30"></div>
+<div class="field"><label for="reasonableHi">حداکثر معقول (اختیاری)</label><input id="reasonableHi" value="40"></div></div>
+<div class="field"><label for="reason">مبنای حدود / دلیل اصلاح (برای ثبت نسخه محلی)</label><textarea id="reason" placeholder="مثلاً برآورد مستند هزینه یا سقف پیشنهادی بازار"></textarea></div>
+<div class="buttons"><button id="solve">محاسبه نامعادلات</button><button class="secondary" id="save">ذخیره نتیجه در فهرست مقایسه</button><button class="secondary" id="reset">بازگردانی نمونه</button></div></div>
+</section><aside>
+<div class="panel" aria-live="polite"><h2>نتیجه محاسبه</h2><div id="status">هنوز محاسبه‌ای انجام نشده است.</div><div id="result"></div></div>
+<div class="panel"><h2>مقایسه سناریوها</h2><p>در این نسخه داده‌ها فقط در حافظه همین صفحه نگه‌داری می‌شوند و بعد از بستن صفحه پاک می‌شوند.</p>
+<ol id="history"></ol><div class="buttons"><button class="secondary" id="export">کپی JSON سناریوها</button><button class="secondary" id="clear">پاک‌کردن مقایسه</button></div></div>
+</aside></div><footer>DEMO ONLY • فاقد داده واقعی، پرداخت، ذخیره‌سازی سروری و تأیید مدیریتی • بر اساس تصمیم TEC-DEC-012</footer>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const ids=['course','unknown','lo','hi','step','known','constraints','reasonableLo','reasonableHi','reason'];
+const initial=Object.fromEntries(ids.map(id=>[id,$(id).value]));
+const history=[];let last=null;
+function parseKnown(text){
+ const data={};for(const raw of text.split(/\r?\n/)){if(!raw.trim())continue;
+ const index=raw.indexOf('=');if(index<1)throw Error('مقدار معلوم باید به شکل NAME=VALUE باشد');
+ const key=raw.slice(0,index).trim(),value=raw.slice(index+1).trim();
+ if(!/^[A-Za-z][A-Za-z0-9_]*$/.test(key)||!value||Object.hasOwn(data,key))throw Error('نام تکراری یا مقدار نامعتبر: '+key);
+ data[key]=value;
+ }return data;
+}
+function parseConstraints(text){
+ return text.split(/\r?\n/).filter(x=>x.trim()).map(row=>{
+ const fields=row.split('|').map(x=>x.trim());
+ if(fields.length!==4||fields.some(x=>!x))throw Error('هر نامعادله باید چهار جزء داشته باشد');
+ return {name:fields[0],left:fields[1],operator:fields[2],right:fields[3]};
+ });
+}
+function payload(){return {course_version:$('course').value,unknown:$('unknown').value,
+ known:parseKnown($('known').value),lower:$('lo').value,upper:$('hi').value,step:$('step').value,
+ constraints:parseConstraints($('constraints').value),
+ reasonable_lower:$('reasonableLo').value.trim()||null,
+ reasonable_upper:$('reasonableHi').value.trim()||null};}
+function item(label,value,where){const div=document.createElement('div');div.className='metric';
+ const t=document.createElement('span');t.textContent=label+': ';
+ const b=document.createElement('strong');b.textContent=value??'—';div.append(t,b);where.append(div);}
+$('solve').addEventListener('click',async()=>{
+ $('status').textContent='در حال محاسبه...';$('status').className='';
+ $('result').replaceChildren();last=null;
+ try{const data=payload();const response=await fetch('/api/solve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+ const result=await response.json();if(!response.ok)throw Error(result.error||'خطا در محاسبه');
+ last={inputs:data,result,reason:$('reason').value.trim()};
+ $('status').textContent=result.status;$('status').className=result.first_reasonable!==null?'ok':'bad';
+ item('تعداد نقاط بررسی‌شده',result.tested,$('result'));
+ item('اولین جواب ریاضی در شبکه',result.first_feasible,$('result'));
+ item('اولین جواب در حدود اعلام‌شده',result.first_reasonable,$('result'));
+ item('تعداد جواب‌های ریاضی',result.feasible_count,$('result'));
+ item('تعداد جواب‌های در محدوده معقول',result.reasonable_count,$('result'));
+ const p=document.createElement('p');p.textContent='دلایل رد: '+JSON.stringify(result.rejection_counts)+'؛ این نتیجه گواه بهینگی پیوسته یا معقول‌بودن تجربی نیست.';$('result').append(p);
+ }catch(e){$('status').textContent='خطا: '+e.message;$('status').className='bad';}
+});
+$('save').addEventListener('click',()=>{if(!last){$('status').textContent='ابتدا محاسبه را اجرا کنید.';return;}
+ if(history.length>=20){$('status').textContent='حداکثر ۲۰ سناریو قابل مقایسه است.';return;}
+ history.push(JSON.parse(JSON.stringify(last)));drawHistory();});
+function drawHistory(){$('history').replaceChildren();history.forEach((x,i)=>{
+ const li=document.createElement('li');
+ li.textContent=(i+1)+'. '+x.inputs.course_version+' | '+x.inputs.unknown+' = '+(x.result.first_reasonable??'بدون جواب در حدود')+' | '+(x.reason||'بدون توضیح');
+ $('history').append(li);
+ });}
+$('clear').addEventListener('click',()=>{history.length=0;drawHistory();});
+$('reset').addEventListener('click',()=>{ids.forEach(id=>$(id).value=initial[id]);last=null;$('result').replaceChildren();$('status').textContent='نمونه بازگردانده شد.';});
+$('export').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(JSON.stringify(history,null,2));$('status').textContent='سناریوها کپی شدند.';}catch(e){$('status').textContent='کپی ممکن نبود؛ مجوز مرورگر را بررسی کنید.';}});
+</script></body></html>
