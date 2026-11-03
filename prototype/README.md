@@ -55,3 +55,15 @@ A cash shortfall in any period makes the trial infeasible even when later receip
 **Important limitations:** The period order is asset revaluation → liquidation → other cash inflow → new investment → expense/capital payment. All movements within one period are aggregated; negative intraperiod balances might be hidden, so real-world payments need transaction-timed checks. Asset prices, ability to liquidate, slippage, settlement delays and custody are **assumptions supplied by a scenario**, not facts or guarantees. The model does not establish actual fund ownership, legal reserves, future payment obligations, locked assets, payable taxes, accounting profit, or fiduciary authorizations. An available asset sale is not automatically permitted or executable. `feasible=True` is only feasibility under an explicit toy scenario, not clearance to use a tuition price.
 
 Existing `pricing_lab.py` remains unchanged for regression compatibility and represents a more optimistic liquid-return experiment. It must **not** be used as the authoritative financial model when liquidity is material. Reconcile business contracts and obtain human sign-off before attempting actual pricing or any deployment.
+
+## v0.4 — Bounded feasibility search on the segregated liquidity model
+
+`liquidity_optimizer.py` exposes `evaluate_prices(PriceRange(lower, upper, increment), (LiquidityCase(label, LiquidityScenario(...)), ...))`. It evaluates **every explicitly supplied price grid point** against **every supplied scenario**, including cash shortages in any period, minimum unrestricted final cash and minimum final combined asset value. It reports the first feasible grid point and all feasible grid points, or `NO_FEASIBLE_GRID_POINT`; rejected points carry scenario-specific constraint violations.
+
+- **No guessed financial inputs:** prices, return rates, learner counts, due-date cash outflows and asset liquidation schedules must all be supplied. Unit conventions are caller-owned and must be consistent.
+- **No continuous/global optimality claim:** `first_feasible` means lowest among tested discrete points only. Zero feasible points does not imply infeasibility outside the grid, between grid points or under a different investment policy.
+- **No approved business objective:** a required final cash target is not audited profit; no legal capital earmarking or balance-sheet liabilities are represented here.
+- **No free investment liquidation:** invested wealth contributes to `final_total_value` but only an explicit permissible liquidation contributes to cash.
+- **Non-forecast envelope:** all scenarios must be explicitly selected and audited by a human. Passing an envelope does not establish a probability-of-success claim.
+
+Run `cd prototype && python -m unittest discover -s tests -v`. No production deployment, real fund, real returns or payment integration is authorized.
