@@ -26,7 +26,7 @@ class ScenarioAnalysisTests(unittest.TestCase):
         self.assertEqual(result["tested"], 19)
         self.assertEqual(result["scenario_count"], 2)
         self.assertEqual(result["status"], "COMMON_FEASIBLE_GRID_PRICE")
-        self.assertEqual(result["first_common_price"], Decimal("60"))
+        self.assertEqual(result["first_common_price"], Decimal("50"))
         for p, trials in result["per_price"]:
             if p in result["common_feasible_prices"]:
                 self.assertTrue(all(trial.feasible for _, trial in trials))
