@@ -45,3 +45,13 @@ The source of confirmed decisions remains `docs/DECISIONS.md`. Numerical assumpt
 - `delay_capital(scenario, from_period, to_period, recipients)` moves an already-scheduled recipient count to a later period without changing the total count or eligibility.
 
 All prices, costs, return shocks, dates and period sizes must be supplied by a human/research scenario. The **same-period return-before-withdrawals convention** and assumption that returns are liquid remain research-only limitations. In a real fund, investment balances, spendable liquidity and legal obligations must be modeled separately, with finer timing when needed.
+
+## Segregated liquidity research module (v0.3)
+
+`liquidity_lab.py` is a separate **experimental** model: `LiquidityScenario`, `LiquidityPeriod`, `simulate_liquidity`. It distinguishes unrestricted **cash** from the **marked value of invested assets**. Unrealized investment gains or losses affect asset value but do not become available cash until an explicitly scheduled liquidation. Investing decreases free cash; asset liquidation transfers value back to cash without double-counting returns. Theory/support, apprenticeship-host costs, and tuition-equivalent capital for qualifying participants are cash outflows.
+
+A cash shortfall in any period makes the trial infeasible even when later receipts restore the balance. Explicit sale amounts cannot exceed the available asset value. The model reports final cash, invested value, combined value, capital paid, and periods of modeled shortfall.
+
+**Important limitations:** The period order is asset revaluation → liquidation → other cash inflow → new investment → expense/capital payment. All movements within one period are aggregated; negative intraperiod balances might be hidden, so real-world payments need transaction-timed checks. Asset prices, ability to liquidate, slippage, settlement delays and custody are **assumptions supplied by a scenario**, not facts or guarantees. The model does not establish actual fund ownership, legal reserves, future payment obligations, locked assets, payable taxes, accounting profit, or fiduciary authorizations. An available asset sale is not automatically permitted or executable. `feasible=True` is only feasibility under an explicit toy scenario, not clearance to use a tuition price.
+
+Existing `pricing_lab.py` remains unchanged for regression compatibility and represents a more optimistic liquid-return experiment. It must **not** be used as the authoritative financial model when liquidity is material. Reconcile business contracts and obtain human sign-off before attempting actual pricing or any deployment.
